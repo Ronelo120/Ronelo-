@@ -2,7 +2,7 @@
 session_start();
 
 if (!isset($_SESSION['board'])) {
-    $_SESSION['board'] = ['','','','','','','','',''];
+    $_SESSION['board'] = ['', '', '', '', '', '', '', '', ''];
 }
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -20,7 +20,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 }
 
 function computerMove() {
-    $availableCells = array_keys(array_filter($_SESSION['board', fn($v) => $v === ''));
+    $availableCells = array_keys(array_filter($_SESSION['board'], function($v) {
+        return $v === '';
+    }));
     if (!empty($availableCells)) {
         $cell = $availableCells[array_rand($availableCells)];
         $_SESSION['board'][$cell] = 'O'; // Computer's move
@@ -44,7 +46,7 @@ function checkWin($player) {
 }
 
 function resetGame() {
-    $_SESSION['board'] = ['','','','','','','','',''];
+    $_SESSION['board'] = ['', '', '', '', '', '', '', '', ''];
 }
 
 $isGameOver = checkWin('X') || checkWin('O') || count(array_filter($_SESSION['board'])) === 9;
